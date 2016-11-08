@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    
+    <ng-view></ng-view>
+
+    <!--template-->
+    <script type="text/ng-template" id="/guru.html">
+    	Cari Nama Guru: <input type = "text" ng-model="search.nama">
+    		<ul>
+    			<li ng-repeat="guru in guru | filter: search">
+    			  <p ng-show="!editing[$index]">Nama: {{guru.nama}}</p>
+                  <p ng-show="!editing[$index]">Lokasi: {{guru.lokasi}}</p>
+                  <p ng-show="!editing[$index]">Biaya: {{guru.biaya}}</p>
+                  <button ng-show="!editing[$index]" ng-click="edit($index)">Edit</button>
+                  <button ng-show="!editing[$index]" ng-click="remove($index)">Hapus</button>
+
+                  <form ng-show="editing[$index]">
+                  Nama: <input ng-show="editing[$index]" type="text" ng-model="guru.nama"><br><br>
+                  Lokasi: <input ng-show="editing[$index]" type="text" ng-model="guru.lokasi"><br><br>
+                  Biaya: <input ng-show="editing[$index]" type="number" ng-model="guru.biaya"><br><br>
+                  <button ng-show="editing[$index]" ng-click="update($index)">Update</button>
+                  <button ng-show="editing[$index]" ng-click="cancel($index)">Cancel</button>
+                  </form>
+    			</li>
+    		</ul>
+
+        <!--Form input-->   
+        <h3>Tambah Data Guru</h3>
+        <form ng-submit='save()'>
+        Nama: <input ng-model='newNama' type="text"><br><br>
+        Lokasi: <input ng-model='newLokasi' type="text"><br><br>
+        Biaya: <input ng-model='newBiaya' type="number"><br><br>
+        <input type='submit' value='Simpan Data'>
+        </form>
+
+    </script>
+
+    <!--library-->
+    <script type="text/javascript" src="javascripts/angular.min.js"></script>
+    <script type="text/javascript" src="javascripts/angular-route.min.js"></script>
+    <script type="text/javascript" src="javascripts/angular-resource.min.js"></script>
+    <script type="text/javascript" src="javascripts/controller.js"></script>
+
+  </body>
+</html>
