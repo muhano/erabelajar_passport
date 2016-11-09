@@ -11,6 +11,7 @@
 
     <!--template-->
     <script type="text/ng-template" id="/guru.html">
+      <button ng-controller="logoutController" ng-click='logout()'>Logout</button><br><br>
     	Cari Nama Guru: <input type = "text" ng-model="search.nama">
     		<ul>
     			<li ng-repeat="guru in guru | filter: search">
@@ -38,14 +39,46 @@
         Biaya: <input ng-model='newBiaya' type="number"><br><br>
         <input type='submit' value='Simpan Data'>
         </form>
-
     </script>
 
+    <!--template register-->
+    <script type="text/ng-template" id="/register.html">
+      <h2>Daftar</h2>
+        <div ng-show="error">{{errorMessage}}</div>
+        <form ng-submit="register()">
+        <label>Username</label>
+        <input type="text" name="username" ng-model="registerForm.username" required><br><br>
+        <label>Password</label>
+        <input type="password" name="password" ng-model="registerForm.password" required><br><br>
+        <button type="submit"  ng-disabled="disabled">Daftar</button>
+       </form>
+       <p>Sudah punya akun? silahkan <a href="#/login">login</a>.</p>
+    </script>
+
+    <!--template login-->
+    <script type="text/ng-template" id="/login.html">
+      <h2>Login</h2>
+        <div ng-show="error">{{errorMessage}}</div>
+        <form ng-submit="login()">
+        <label>Username</label>
+        <input type="text" name="username" ng-model="loginForm.username" required><br><br>
+        <label>Password</label>
+        <input type="password" name="password" ng-model="loginForm.password" required><br><br>
+        <button type="submit"  ng-disabled="disabled">Login</button>
+       </form><br>
+       <p>Untuk mengakses daftar guru silahkan Login terlebih dahulu.<br>Belum punya akun? silahkan <a href="#/register">registrasi</a>.</p>
+    </script>
+
+
+
     <!--library-->
+    <script type="text/javascript" src="javascripts/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="javascripts/angular.min.js"></script>
     <script type="text/javascript" src="javascripts/angular-route.min.js"></script>
     <script type="text/javascript" src="javascripts/angular-resource.min.js"></script>
     <script type="text/javascript" src="javascripts/controller.js"></script>
+    <script type="text/javascript" src="javascripts/authControllers.js"></script>
+    <script type="text/javascript" src="javascripts/authServices.js"></script>
 
   </body>
 </html>

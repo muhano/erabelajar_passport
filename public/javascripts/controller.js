@@ -58,6 +58,41 @@ app.controller('GuruController', ['$scope', 'Guru', function($scope, Guru){
 app.config(['$routeProvider', function($routeProvider){
 	$routeProvider.when('/', {
 		templateUrl: '/guru.html',
-		controller: 'GuruController'
+		controller: 'GuruController',
+		access: {restricted: true}
 	});
+	$routeProvider.when('/login', {
+	  templateUrl: '/login.html',
+	  controller: 'loginController',
+	  access: {restricted: false}
+	})
+	$routeProvider.when('/logout', {
+	  controller: 'logoutController',
+	  access: {restricted: true}
+	})
+	$routeProvider.when('/register', {
+	  templateUrl: '/register.html',
+	  controller: 'registerController',
+	  access: {restricted: false}
+	})
+	$routeProvider.when('/check', {
+	  template: '<h1>Halaman ini hanya bisa diakses oleh pengguna</h1>',
+	  access: {restricted: true}
+	})
+	$routeProvider.otherwise({
+      redirectTo: '/login'
+    });
 }]);
+
+app.run(function ($rootScope, $location, $route, AuthService) {
+  $rootScope.$on('$routeChangeStart',
+    function (event, next, current) {
+      AuthService.getUserStatus()
+      .then(function(){
+        if (next.access.restricted && !AuthService.isLoggedIn()){
+          $location.path('/login');
+          $route.reload();
+        }
+      });
+  });
+});
